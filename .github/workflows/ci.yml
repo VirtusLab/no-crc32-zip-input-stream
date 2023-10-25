@@ -15,9 +15,11 @@ jobs:
       with:
         fetch-depth: 0
     - uses: coursier/cache-action@v6.4
-    - uses: coursier/setup-action@v1.3.0
+    - uses: VirtusLab/scala-cli-setup@v1.0
+      with:
+        power: true
     - name: Test
-      run: ./scala-cli test . --cross --require-tests
+      run: scala-cli test . --cross --require-tests --suppress-experimental-feature-warning
 
   publish:
     needs: test
@@ -28,9 +30,11 @@ jobs:
       with:
         fetch-depth: 0
     - uses: coursier/cache-action@v6.4
-    - uses: coursier/setup-action@v1.3.0
+    - uses: VirtusLab/scala-cli-setup@v1.0
+      with:
+        power: true
     - name: Release
-      run: ./scala-cli publish . --cross
+      run: scala-cli publish . --cross --suppress-experimental-feature-warning
       env:
         PUBLISH_USER: ${{ secrets.SONATYPE_USERNAME }}
         PUBLISH_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
